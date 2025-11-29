@@ -9,5 +9,6 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.release>24</maven.compiler.release>
         <exec.mainClass>com.mycompany.trabalho_poo_logo.Trabalho_POO_LOGO</exec.mainClass>
+        <sonar.organization>ramon-venancio</sonar.organization>
     </properties>
 </project>
