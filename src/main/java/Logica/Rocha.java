@@ -5,6 +5,10 @@ import excecao.MovimentoInvalidoException;
 
 public class Rocha extends Obstaculo{
     
+    public Rocha(int id, int posicaoX, int posicaoY) {
+        super(id, posicaoX, posicaoY);
+    }
+    
     @Override
     public boolean bater(Robo robo , int ultimaPosicaoX , int ultimaPosicaoY){
         System.out.println("O robo " + robo.getCor() + " bateu em uma rocha " + getId() + " na posicao (" + robo.getPosicaoX() + " , " + robo.getPosicaoY() + ") e voltou para a posicao anterior (" + ultimaPosicaoX + " , " + ultimaPosicaoY + ").");

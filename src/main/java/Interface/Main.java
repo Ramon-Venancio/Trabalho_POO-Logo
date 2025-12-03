@@ -3,82 +3,38 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 import Logica.Robo;
+import Logica.SimulacaoRunner;
 import excecao.MovimentoInvalidoException;
 
 
 public class Main {
-    
-    private static int obterCoordenada(Scanner sc , String eixo){
-        int coord = -1;
-        while(coord < 0){
-            System.out.print("Digite a coordenada " + eixo + " do alimento: ");
-            try{
-                coord = sc.nextInt();
-                if(coord < 0){
-                    System.out.println("ERRO:A coordenada nao deve ser negativa.Tente Novamente.");
-                }
-            }catch(InputMismatchException e){
-                // verifica se o usuario vai digitar um inteiro
-                System.out.println("ERRO:Entrada Invalida.Digite um número inteiro.");
-                sc.nextLine();  //sc.nextInt() vai fazer o programa tentar ler outro numero imediatamente
-                                //sc.nextLine() vai descartar a entrada errada
-            }
-        }
-        return coord;
-    }
-
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        Robo meuRobo = new Robo("Rosa Marfin");
-        int alimentoX ,alimentoY , direcao;
+        SimulacaoRunner simulacao = new SimulacaoRunner();
+                
+        System.out.println("Escolha qual modo de simulação você quer");
+        System.out.println("1 - Manual");
+        System.out.println("2 - Randomica");
+        System.out.println("3 - Inteligente");
+        System.out.println("4 - Obstaculos");
         
-        System.out.println("==========================================");
-        System.out.println("                 ROBO LOGO");
-        System.out.println("==========================================");
-        System.out.println("Robo " + meuRobo.getCor() + " iniciado na posicao (0 , 0).");
-        System.out.println("\nCONFIGURACAO DO ALIMENTO");
-        do {
-            alimentoX = obterCoordenada(sc, "X");
-            alimentoY = obterCoordenada(sc, "Y");
-            if (alimentoX >= Robo.TAMANHO_AREA || alimentoY >= Robo.TAMANHO_AREA) {
-                System.out.println("ERRO: As coordenadas devem estar dentro da area de locomoção do robo (0 a " + (Robo.TAMANHO_AREA - 1) + "). Tente Novamente.");
-            }
-        } while (alimentoX < 0 || alimentoY < 0 || alimentoX >= Robo.TAMANHO_AREA || alimentoY >= Robo.TAMANHO_AREA);
-            System.out.printf("Alimento posicionado em: (%d, %d)\n", alimentoX, alimentoY);
-            System.out.println("\nJOGO INICIADO COM SUCESSO!");
+        int opcao = sc.nextInt();
         
-        while (!meuRobo.encontrouAlimento(alimentoX, alimentoY)) {
-            System.out.println("------------------------------------------");
-            System.out.println("Posicao Atual: " + meuRobo.toString());
-            System.out.println("Mova o Robo:");
-            System.out.println("  1: up | 2: down | 3: right | 4: left");
-            System.out.print("Sua escolha: ");
-            
-            try {
-                if (sc.hasNextInt()) {
-                    direcao = sc.nextInt();
-                    
-                    meuRobo.mover(direcao); 
-                } else {
-                    // Captura e trata a InputMismatchException (se digitar letra, por exemplo)
-                    System.err.println("ERRO DE ENTRADA: Digite um número inteiro de 1 a 4.");
-                    sc.next(); // Consome a entrada inválida
-                }
-            } catch (MovimentoInvalidoException e) {
-                // Captura e trata a exceção(movimento negativo)
-                System.err.println("\n MOVIMENTO BLOQUEADO!");
-                System.out.println("----------------------------");
-                System.err.println("Motivo: " + e.getMessage());
-                System.out.println("O robo nao se moveu e permanece na posicao anterior.");
-            }
+        switch (opcao) {
+            case 1:
+                simulacao.iniciarSimulacao("Manual");
+                break;
+            case 2:
+                simulacao.iniciarSimulacao("Randomica");
+                break;
+            case 3:
+                simulacao.iniciarSimulacao("Inteligente");
+                break;
+            case 4:
+                simulacao.iniciarSimulacao("Obstaculos");
+                break;
+            default:
+                throw new AssertionError();
         }
-        
-        System.out.println("\n-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        System.out.println("!!! ALIMENTO ENCONTRADO !!!");
-        System.out.printf("O Robo chegou a posicao do alimento (%d, %d), Onde estava o Alimento!.\n", alimentoX, alimentoY);
-        System.out.println("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
-        
-        
-        sc.close();
     }
 }
